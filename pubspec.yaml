@@ -1,0 +1,42 @@
+name: futgres
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+  firebase_core: ^1.11.0
+  firebase_auth: ^3.3.5
+  google_sign_in: ^5.3.3
+  firebase_database: ^8.2.0
+  firebase_storage: ^10.2.5
+  shared_preferences: ^2.0.11
+  permission_handler: ^9.2.0
+  intl: ^0.17.0
+  image_picker: ^0.8.4+4
+  image_cropper: ^2.0.3
+  mobx: ^2.0.7
+  flutter_mobx: ^2.0.6+1
+  get_it: ^7.2.0
+
+dev_dependencies:
+  flutter_lints: ^1.0.0
+  mobx_codegen: ^2.0.4
+  build_runner: ^2.1.7
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - images/background.png
+    - images/logo.png
+    - images/logotype.png

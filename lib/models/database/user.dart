@@ -1,5 +1,5 @@
 class UserModel {
-  const UserModel({
+  UserModel({
     this.uid,
     this.email,
     this.name,
@@ -13,9 +13,17 @@ class UserModel {
   final String? email;
   final String? name;
   final String? birthDate;
-  final String? avatarUrl;
-  final String? teamId;
+  String? avatarUrl;
+  String? teamId;
   final bool? isOrganizer;
+
+  set setAvatarUrl(String avatarUrl) {
+    this.avatarUrl = avatarUrl;
+  }
+
+  set setTeamId(String teamId) {
+    this.teamId = teamId;
+  }
 
   Map<String, dynamic> convertToDatabase() {
     return {

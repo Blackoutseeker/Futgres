@@ -8,7 +8,7 @@ class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
   @observable
-  UserModel user = const UserModel(isOrganizer: false);
+  UserModel user = UserModel(isOrganizer: false);
 
   @action
   void setUser({

@@ -2,34 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:futgres/models/database/banner.dart';
+import 'package:futgres/models/database/match.dart';
 import 'package:futgres/models/routes/routes.dart';
 
-import 'package:futgres/controllers/database/banner.dart';
+import 'package:futgres/controllers/database/match.dart';
 import 'package:futgres/controllers/stores/user_store.dart';
 
-import 'package:futgres/views/widgets/home/banner_card.dart';
+import 'package:futgres/views/widgets/matches/match_card.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MatchesScreen extends StatefulWidget {
+  const MatchesScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MatchesScreen> createState() => _MatchesScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MatchesScreenState extends State<MatchesScreen> {
   final UserStore _userStore = GetIt.I.get<UserStore>();
-  final BannerDatabase _database = BannerDatabase.instance;
-  List<BannerModel> _banners = [];
+  final MatchDatabase _database = MatchDatabase.instance;
+  List<MatchModel> _matches = [];
 
-  Future<void> _navigateToCreateBannerScreen(BuildContext context) async {
-    await Navigator.of(context).pushNamed(Routes.createBanner);
+  Future<void> _navigateToCreateMatchScreen(BuildContext context) async {
+    await Navigator.of(context).pushNamed(Routes.createMatch);
   }
 
-  Future<void> _getBannersFromDatabase() async {
-    await _database.getBannersFromDatabase().then((bannersFromDatabase) {
+  Future<void> _getMatchesFromDatabase() async {
+    await _database.getMatchesFromDatabase().then((matchesFromDatabase) {
       setState(() {
-        _banners = bannersFromDatabase;
+        _matches = matchesFromDatabase;
       });
     });
   }
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _getBannersFromDatabase();
+    _getMatchesFromDatabase();
   }
 
   @override
@@ -45,10 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Observer(
       builder: (_) => Scaffold(
         body: RefreshIndicator(
-          onRefresh: _getBannersFromDatabase,
+          onRefresh: _getMatchesFromDatabase,
           child: SizedBox(
             width: double.infinity,
-            child: _banners.isEmpty
+            child: _matches.isEmpty
                 ? const SizedBox(
                     width: double.infinity,
                     height: double.infinity,
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Padding(
                         padding: EdgeInsets.all(32),
                         child: Text(
-                          'Nenhuma postagem foi feita até o momento.',
+                          'Nenhuma partida foi agendada até o momento.',
                           style: TextStyle(
                             color: Color(0xFF777777),
                             fontSize: 20,
@@ -67,21 +67,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )
                 : ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
                     shrinkWrap: false,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    itemCount: _banners.length,
-                    itemBuilder: (_, index) => BannerCard(
+                    itemCount: _matches.length,
+                    itemBuilder: (_, index) => MatchCard(
                       key: UniqueKey(),
-                      bannerModel: _banners[index],
+                      matchModel: _matches[index],
                     ),
                   ),
           ),
         ),
         floatingActionButton: _userStore.user.isOrganizer == true
             ? FloatingActionButton(
-                onPressed: () => _navigateToCreateBannerScreen(context),
-                tooltip: 'Criar postagem',
-                heroTag: 'FAB home',
+                onPressed: () => _navigateToCreateMatchScreen(context),
+                tooltip: 'Agendar partida',
+                heroTag: 'FAB matches',
                 child: const Icon(Icons.add),
               )
             : null,

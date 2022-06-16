@@ -25,7 +25,7 @@ class _CreateBannerScreenState extends State<CreateBannerScreen> {
 
   File? _bannerImage;
 
-  Future<void> _backToPreviousScreen(BuildContext context) async {
+  void _backToPreviousScreen(BuildContext context) {
     Navigator.of(context).pop();
   }
 
@@ -87,7 +87,7 @@ class _CreateBannerScreenState extends State<CreateBannerScreen> {
         postDate: postDate,
       );
 
-      await _database.createBannerInDatabase(bannerModel).then((_) async {
+      await _database.createBannerInDatabase(bannerModel).then((_) {
         _backToPreviousScreen(context);
       });
     }
@@ -121,7 +121,7 @@ class _CreateBannerScreenState extends State<CreateBannerScreen> {
                       child: Container(
                         width: double.infinity,
                         height: 180,
-                        color: const Color.fromRGBO(0, 0, 0, 0.2),
+                        color: const Color.fromRGBO(0, 0, 0, 0.5),
                         child: _bannerImage != null
                             ? Image.file(
                                 _bannerImage!,
@@ -132,14 +132,14 @@ class _CreateBannerScreenState extends State<CreateBannerScreen> {
                                 children: const <Widget>[
                                   Icon(
                                     Icons.add_photo_alternate_outlined,
-                                    color: Color.fromRGBO(255, 255, 255, 0.7),
+                                    color: Color.fromRGBO(255, 255, 255, 0.8),
                                     size: 80,
                                   ),
                                   SizedBox(height: 16),
                                   Text(
                                     'Escolher imagem',
                                     style: TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 0.7),
+                                      color: Color.fromRGBO(255, 255, 255, 0.8),
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -153,15 +153,12 @@ class _CreateBannerScreenState extends State<CreateBannerScreen> {
                   TextField(
                     controller: _descriptionController,
                     onEditingComplete: () => _createBannerInDatabase(context),
-                    textCapitalization: TextCapitalization.words,
                     style: const TextStyle(
                       color: Color(0xFF000000),
                       fontSize: 18,
                     ),
                     decoration: const InputDecoration(
                       labelText: 'Descrição da postagem',
-                      labelStyle: TextStyle(),
-                      border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2,

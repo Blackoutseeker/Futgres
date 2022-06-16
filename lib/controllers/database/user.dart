@@ -43,4 +43,23 @@ class UserDatabase {
 
     return userModel;
   }
+
+  Future<void> updateUserInDatabase(UserModel userModel) async {
+    await _database
+        .reference()
+        .child('users/${userModel.uid}')
+        .update(userModel.convertToDatabase());
+
+    await _database
+        .reference()
+        .child('players/${userModel.uid}')
+        .update(userModel.convertToDatabase());
+
+    if (userModel.teamId != null) {
+      await _database
+          .reference()
+          .child('teams/${userModel.teamId}/players/${userModel.uid}')
+          .update(userModel.convertToDatabase());
+    }
+  }
 }

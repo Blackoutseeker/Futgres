@@ -19,9 +19,12 @@ class BannerCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               height: 160,
-              child: Image.network(
-                bannerModel.imageUrl,
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Image.network(
+                  bannerModel.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(height: 16),

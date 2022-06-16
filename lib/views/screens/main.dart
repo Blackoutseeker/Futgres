@@ -9,6 +9,8 @@ import 'package:futgres/controllers/database/user.dart';
 import 'package:futgres/controllers/stores/user_store.dart';
 
 import 'package:futgres/views/screens/home.dart';
+import 'package:futgres/views/screens/my_team.dart';
+import 'package:futgres/views/screens/matches.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -20,6 +22,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
+    const MyTeamScreen(),
+    const MatchesScreen(),
   ];
 
   int _currentNavigationIndex = 0;
@@ -88,10 +92,10 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(Icons.calendar_month),
               label: 'Agenda',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.leaderboard),
-              label: 'Tabelas',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.leaderboard),
+            //   label: 'Tabelas',
+            // ),
           ],
         ),
       ),

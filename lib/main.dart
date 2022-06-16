@@ -17,6 +17,10 @@ import 'package:futgres/views/screens/sign_up.dart';
 import 'package:futgres/views/screens/main.dart';
 import 'package:futgres/views/screens/home.dart';
 import 'package:futgres/views/screens/create_banner.dart';
+import 'package:futgres/views/screens/my_team.dart';
+import 'package:futgres/views/screens/create_team.dart';
+import 'package:futgres/views/screens/matches.dart';
+import 'package:futgres/views/screens/create_match.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,10 +76,10 @@ class App extends StatelessWidget {
           Routes.main: (_) => const MainScreen(),
           Routes.home: (_) => const HomeScreen(),
           Routes.createBanner: (_) => const CreateBannerScreen(),
-          Routes.myTeam: (_) => const HomeScreen(),
-          Routes.createTeam: (_) => const HomeScreen(),
-          Routes.createMatch: (_) => const HomeScreen(),
-          Routes.matches: (_) => const HomeScreen(),
+          Routes.myTeam: (_) => const MyTeamScreen(),
+          Routes.createTeam: (_) => const CreateTeamScreen(),
+          Routes.matches: (_) => const MatchesScreen(),
+          Routes.createMatch: (_) => const CreateMatch(),
           Routes.scores: (_) => const HomeScreen(),
         },
       ),

@@ -47,26 +47,23 @@ class App extends StatelessWidget {
     return Observer(
       builder: (_) => MaterialApp(
         localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
-        supportedLocales: const [
-          Locale('pt', 'BR'),
-        ],
+        supportedLocales: const [Locale('pt', 'BR')],
         title: 'Futgres',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: const MaterialColor(0xFF0FA854, {
-            50: Color(0xFFE6F6EB),
-            100: Color(0xFFC3E9CE),
-            200: Color(0xFF9BDBAF),
-            300: Color(0xFF70CE8F),
-            400: Color(0xFF4BC376),
-            500: Color(0xFF1BB75E),
-            600: Color(0xFF0FA854),
-            700: Color(0xFF009648),
-            800: Color(0xFF00843C),
-            900: Color(0xFF006528),
-          })).copyWith(
-            secondary: const Color(0xFF000000),
-          ),
+            primarySwatch: const MaterialColor(0xFF0FA854, {
+              50: Color(0xFFE6F6EB),
+              100: Color(0xFFC3E9CE),
+              200: Color(0xFF9BDBAF),
+              300: Color(0xFF70CE8F),
+              400: Color(0xFF4BC376),
+              500: Color(0xFF1BB75E),
+              600: Color(0xFF0FA854),
+              700: Color(0xFF009648),
+              800: Color(0xFF00843C),
+              900: Color(0xFF006528),
+            }),
+          ).copyWith(secondary: const Color(0xFF000000)),
         ),
         home: isLogged == null ? const InitialScreen() : const MainScreen(),
         routes: {

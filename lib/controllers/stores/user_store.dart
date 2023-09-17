@@ -4,9 +4,9 @@ import 'package:futgres/models/database/user.dart';
 
 part 'user_store.g.dart';
 
-class UserStore = _UserStore with _$UserStore;
+class UserStore = UserStoreBase with _$UserStore;
 
-abstract class _UserStore with Store {
+abstract class UserStoreBase with Store {
   @observable
   UserModel user = UserModel(isOrganizer: false);
 

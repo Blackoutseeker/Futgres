@@ -10,9 +10,9 @@ class MatchDatabase {
   Future<List<MatchModel>> getMatchesFromDatabase() async {
     final List<MatchModel> matches = [];
 
-    await _database.reference().child('matches').once().then((snapshot) {
+    await _database.ref().child('matches').once().then((snapshot) {
       final Map<String, dynamic> matchesFromDatabase =
-          Map<String, dynamic>.from(snapshot.value);
+          Map<String, dynamic>.from(snapshot.snapshot.value as Map);
 
       matchesFromDatabase.forEach((_, value) {
         matches.add(
@@ -25,7 +25,7 @@ class MatchDatabase {
 
   Future<void> createMatchInDatabase(MatchModel matchModel) async {
     await _database
-        .reference()
+        .ref()
         .child('matches')
         .child(matchModel.id)
         .set(matchModel.convertToDatabase());

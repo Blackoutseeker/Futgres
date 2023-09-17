@@ -26,7 +26,7 @@ class Authentication {
     await Navigator.of(context).pushReplacementNamed(Routes.signin);
   }
 
-  Future<Widget> _presentDialog(
+  Future<Widget?> _presentDialog(
     String title,
     String content,
     BuildContext context,
@@ -94,7 +94,9 @@ class Authentication {
                 await _userDatabase.getUserFromDatabase(user.uid);
 
             if (userModel != null) {
-              await _saveUserSession(userModel, context);
+              if (context.mounted) {
+                await _saveUserSession(userModel, context);
+              }
             }
           }
         }
@@ -156,15 +158,19 @@ class Authentication {
         UserModel? userFromDatabase =
             await _userDatabase.getUserFromDatabase(user.uid);
         if (userFromDatabase != null) {
-          await _saveUserSession(userFromDatabase, context);
+          if (context.mounted) {
+            await _saveUserSession(userFromDatabase, context);
+          }
         }
       } else {
         if (user.email != null) {
-          await _presentDialog(
-            'Ocorreu um erro!',
-            'Você ainda não possui uma conta. Faça seu cadastro e garanta seu lugar no nosso aplicativo!',
-            context,
-          );
+          if (context.mounted) {
+            await _presentDialog(
+              'Ocorreu um erro!',
+              'Você ainda não possui uma conta. Faça seu cadastro e garanta seu lugar no nosso aplicativo!',
+              context,
+            );
+          }
         }
       }
     });
@@ -192,22 +198,25 @@ class Authentication {
           );
           await _userDatabase.createUserInDatabase(userToDatabase);
           await user.sendEmailVerification();
-          await showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (_) => AlertDialog(
-              title: const Text('Veja sua caixa de entrada!'),
-              content: const Text(
-                'Um e-mail lhe foi enviado para verificar sua conta.',
-              ),
-              actions: <TextButton>[
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () async => await _navigateToSignInScreen(context),
+          if (context.mounted) {
+            await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (_) => AlertDialog(
+                title: const Text('Veja sua caixa de entrada!'),
+                content: const Text(
+                  'Um e-mail lhe foi enviado para verificar sua conta.',
                 ),
-              ],
-            ),
-          );
+                actions: <TextButton>[
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () async =>
+                        await _navigateToSignInScreen(context),
+                  ),
+                ],
+              ),
+            );
+          }
         }
       }).catchError((error) async {
         final String? errorMessage = error.message;
@@ -253,7 +262,9 @@ class Authentication {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     await preferences.clear();
-    await Navigator.of(context).pushReplacementNamed(Routes.initial);
+    if (context.mounted) {
+      await Navigator.of(context).pushReplacementNamed(Routes.initial);
+    }
   }
 
   Future<void> resetPassword(String email, BuildContext context) async {

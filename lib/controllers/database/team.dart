@@ -12,7 +12,7 @@ class TeamDatabase {
 
   Future<void> createTeamInDatabase(TeamModel teamModel) async {
     await _database
-        .reference()
+        .ref()
         .child('teams/${teamModel.id}')
         .set(teamModel.convertToDatabase());
 
@@ -22,13 +22,9 @@ class TeamDatabase {
   }
 
   Future<TeamModel> getTeamFromDatabase(String teamId) async {
-    return await _database
-        .reference()
-        .child('teams/$teamId')
-        .once()
-        .then((snapshot) {
+    return await _database.ref().child('teams/$teamId').once().then((snapshot) {
       final Map<String, dynamic> teamFromDatabase =
-          Map<String, dynamic>.from(snapshot.value);
+          Map<String, dynamic>.from(snapshot.snapshot.value as Map);
       TeamModel teamModel = TeamModel.convertFromDatabase(teamFromDatabase);
       return teamModel;
     });
@@ -37,9 +33,9 @@ class TeamDatabase {
   Future<List<TeamModel>> getTeamsFromDatabase() async {
     final List<TeamModel> teams = [];
 
-    await _database.reference().child('teams').once().then((snapshot) {
+    await _database.ref().child('teams').once().then((snapshot) {
       final Map<String, dynamic> teamsFromDatabase =
-          Map<String, dynamic>.from(snapshot.value);
+          Map<String, dynamic>.from(snapshot.snapshot.value as Map);
 
       teamsFromDatabase.forEach((_, value) {
         teams.add(

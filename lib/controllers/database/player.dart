@@ -10,9 +10,9 @@ class PlayerDatabase {
   Future<List<UserModel>> getPlayersFromDatabase() async {
     final List<UserModel> players = [];
 
-    await _database.reference().child('players').once().then((snapshot) {
+    await _database.ref().child('players').once().then((snapshot) {
       final Map<String, dynamic> playersFromDatabase =
-          Map<String, dynamic>.from(snapshot.value);
+          Map<String, dynamic>.from(snapshot.snapshot.value as Map);
       playersFromDatabase.forEach((_, value) {
         players.add(
             UserModel.convertFromDatabase(Map<String, dynamic>.from(value)));

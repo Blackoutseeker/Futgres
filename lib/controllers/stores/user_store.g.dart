@@ -8,8 +8,8 @@ part of 'user_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$UserStore on _UserStore, Store {
-  late final _$userAtom = Atom(name: '_UserStore.user', context: context);
+mixin _$UserStore on UserStoreBase, Store {
+  late final _$userAtom = Atom(name: 'UserStoreBase.user', context: context);
 
   @override
   UserModel get user {
@@ -24,8 +24,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  late final _$_UserStoreActionController =
-      ActionController(name: '_UserStore', context: context);
+  late final _$UserStoreBaseActionController =
+      ActionController(name: 'UserStoreBase', context: context);
 
   @override
   void setUser(
@@ -36,8 +36,8 @@ mixin _$UserStore on _UserStore, Store {
       String? avatarUrl,
       String? teamId,
       bool? isOrganizer = false}) {
-    final _$actionInfo =
-        _$_UserStoreActionController.startAction(name: '_UserStore.setUser');
+    final _$actionInfo = _$UserStoreBaseActionController.startAction(
+        name: 'UserStoreBase.setUser');
     try {
       return super.setUser(
           uid: uid,
@@ -48,7 +48,7 @@ mixin _$UserStore on _UserStore, Store {
           teamId: teamId,
           isOrganizer: isOrganizer);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$UserStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

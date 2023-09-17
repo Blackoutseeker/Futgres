@@ -9,7 +9,7 @@ class UserDatabase {
 
   Future<bool> checkIfUserAlreadyExists(String uid) async {
     return await _database
-        .reference()
+        .ref()
         .child('users/$uid')
         .get()
         .then((snapshot) => snapshot.exists);
@@ -17,7 +17,7 @@ class UserDatabase {
 
   Future<void> createUserInDatabase(UserModel user) async {
     await _database
-        .reference()
+        .ref()
         .child('users/${user.uid}')
         .set(user.convertToDatabase());
     final bool isPlayer = user.isOrganizer != null
@@ -27,37 +27,36 @@ class UserDatabase {
         : true;
     if (isPlayer) {
       await _database
-          .reference()
+          .ref()
           .child('players/${user.uid}')
           .set(user.convertToDatabase());
     }
   }
 
   Future<UserModel?> getUserFromDatabase(String uid) async {
-    final DataSnapshot data =
-        await _database.reference().child('users/$uid').once();
+    final DataSnapshot data = await _database.ref().child('users/$uid').get();
     if (!data.exists) return null;
 
-    final UserModel userModel =
-        UserModel.convertFromDatabase(Map<String, dynamic>.from(data.value));
+    final UserModel userModel = UserModel.convertFromDatabase(
+        Map<String, dynamic>.from(data.value as Map));
 
     return userModel;
   }
 
   Future<void> updateUserInDatabase(UserModel userModel) async {
     await _database
-        .reference()
+        .ref()
         .child('users/${userModel.uid}')
         .update(userModel.convertToDatabase());
 
     await _database
-        .reference()
+        .ref()
         .child('players/${userModel.uid}')
         .update(userModel.convertToDatabase());
 
     if (userModel.teamId != null) {
       await _database
-          .reference()
+          .ref()
           .child('teams/${userModel.teamId}/players/${userModel.uid}')
           .update(userModel.convertToDatabase());
     }

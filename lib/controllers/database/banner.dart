@@ -10,9 +10,9 @@ class BannerDatabase {
   Future<List<BannerModel>> getBannersFromDatabase() async {
     final List<BannerModel> banners = [];
 
-    await _database.reference().child('banners').once().then((snapshot) {
+    await _database.ref().child('banners').once().then((snapshot) {
       final Map<String, dynamic> bannersFromDatabase =
-          Map<String, dynamic>.from(snapshot.value);
+          Map<String, dynamic>.from(snapshot.snapshot.value as Map);
 
       bannersFromDatabase.forEach((_, value) {
         banners.add(
@@ -26,7 +26,7 @@ class BannerDatabase {
 
   Future<void> createBannerInDatabase(BannerModel bannerModel) async {
     await _database
-        .reference()
+        .ref()
         .child('banners')
         .child(bannerModel.id)
         .set(bannerModel.convertToDatabase());

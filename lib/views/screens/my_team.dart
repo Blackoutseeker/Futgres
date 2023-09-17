@@ -169,8 +169,8 @@ class _MyTeamScreenState extends State<MyTeamScreen> {
                                       color: Color.fromRGBO(0, 0, 0, 0.5),
                                     ),
                                     const SizedBox(height: 16),
-                                    Row(
-                                      children: const <Text>[
+                                    const Row(
+                                      children: <Text>[
                                         Text(
                                           'Jogadores',
                                           style: TextStyle(
